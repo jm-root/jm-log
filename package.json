@@ -26,6 +26,9 @@
   "homepage": "https://github.com/jm-root/jm-log",
   "dependencies": {
     "config": "^2.0.1",
+    "jm-err": "^1.0.5",
+    "jm-ms-core": "^2.1.1",
+    "jm-ms-help": "^2.0.1",
     "jm-ms-mongoose": "^2.0.0",
     "jm-ms-wrapper": "^1.0.1",
     "jm-server": "^2.0.7",

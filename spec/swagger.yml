@@ -8,9 +8,56 @@ info:
   title: jm-log-api
   description: 日志系统API
 paths:
-  /log/logs/{id}:
+  /log/logs:
+    get:
+      description: 查询日志列表
+      parameters:
+      - name: page
+        in: query
+        description: 第几页(正整数,最小值为1)
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - name: rows
+        in: query
+        description: 一页几行数据(正整数,最小值为1)
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+      - name: level
+        in: query
+        description: 日志等级(0~4：debug info warn error fatal; 默认1 info)
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          maximum: 4
+      - name: startTime
+        in: query
+        description: 起始时间戳
+        schema:
+          type: integer
+      - name: endTime
+        in: query
+        description: 截止时间戳
+        schema:
+          type: integer
+      - name: search
+        in: query
+        description: 对 title 进行模糊查询
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logs'
     post:
-      description: 更新日志信息
+      description: 新增日志信息
       requestBody:
         content:
           application/json:
@@ -18,13 +65,14 @@ paths:
               $ref: '#/components/schemas/LogInfo'
       responses:
         '200':
-          description: 更新成功
+          description: 新增日志成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RetInfo'
+                $ref: '#/components/schemas/LogCreate'
+  /log/logs/{id}:
     get:
-      description: 获取日志信息
+      description: 获取指定日志信息
       parameters:
         - name: id
           in: path
@@ -38,19 +86,83 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogInfo'
+    delete:
+      description: 删除日志信息
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetInfo'
 components:
   schemas:
+    Logs:
+      type: object
+      description: 日志列表
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/LogInfo'
+        page:
+          type: integer
+          format: int32
+          description: 当前页码
+        total:
+          type: integer
+          format: int32
+          description: 总行数
+        pages:
+          type: integer
+          format: int32
+          description: 总页数
     LogInfo:
       type: object
+      description: 单个日志信息
       properties:
-        data:
-          type: object
-      description: 日志信息
+        id:
+          type: string
+          description: userId
+        level:
+          type: number
+          minimum: 1
+          maximum: 6
+          example: 2
+          description: 日志等级
+        ip:
+          type: string
+          example: "59.42.239.128"
+          description: IP地址
+        title:
+          type: string
+          required: true
+          example: "WARNING 2018-11-20 09:14:42,248 base 152 Not Found: /log/logs"
+          description: 日志内容
     RetInfo:
       type: object
       properties:
         ret:
           type: integer
           format: int32
+          description: 1 成功 0 失败
           example: 1
       description: 结果信息
+    LogCreate:
+      type: object
+      description: 生成日志参数
+      properties:
+        ret:
+          type: integer
+          format: int32
+          description: 1 成功 0 失败
+          example: 1
+        id:
+          type: string
+          description: userId
