@@ -56,6 +56,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Logs'
+
     post:
       description: 新增日志信息
       requestBody:
@@ -70,6 +71,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogCreate'
+
   /log/logs/{id}:
     get:
       description: 获取指定日志信息
@@ -86,6 +88,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LogInfo'
+
     delete:
       description: 删除日志信息
       parameters:
@@ -101,6 +104,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RetInfo'
+
 components:
   schemas:
     Logs:
@@ -123,6 +127,7 @@ components:
           type: integer
           format: int32
           description: 总页数
+
     LogInfo:
       type: object
       description: 单个日志信息
@@ -145,6 +150,7 @@ components:
           required: true
           example: "WARNING 2018-11-20 09:14:42,248 base 152 Not Found: /log/logs"
           description: 日志内容
+
     RetInfo:
       type: object
       properties:
@@ -154,6 +160,7 @@ components:
           description: 1 成功 0 失败
           example: 1
       description: 结果信息
+
     LogCreate:
       type: object
       description: 生成日志参数
