@@ -139,7 +139,7 @@ components:
           type: integer
           minimum: 0
           maximum: 4
-          example: 2
+          example: 1
           description: 日志等级
         ip:
           type: string
@@ -148,7 +148,7 @@ components:
         title:
           type: string
           required: true
-          example: "WARNING 2018-11-20 09:14:42,248 base 152 Not Found: /log/logs"
+          example: "INFO 2018-11-20 08:32:39,159 basehttp 124 'GET /admin/ HTTP/1.1' 200 8895"
           description: 日志内容
 
     RetInfo:
