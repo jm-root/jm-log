@@ -136,9 +136,9 @@ components:
           type: string
           description: userId
         level:
-          type: number
-          minimum: 1
-          maximum: 6
+          type: integer
+          minimum: 0
+          maximum: 4
           example: 2
           description: 日志等级
         ip:
